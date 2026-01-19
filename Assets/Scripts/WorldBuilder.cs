@@ -4,10 +4,13 @@ using UnityEngine;
 public class WorldBuilder : MonoBehaviour
 {
     [SerializeField] private GameObject pipe;
+    [SerializeField] private GameObject enemy;
+
     [SerializeField] private float horizontalSpacing = 3.0f;
 
-    // Use Unity's built-in range support for floats
-    [SerializeField] private Vector2 verticalRange = new Vector2(-2f, 2f);
+    [SerializeField] private Vector2 pipeVerticalOffsetRange = new Vector2(-2f, 2f);
+    [SerializeField] private Vector2 enemyVerticalOffsetRange = new Vector2(-3f, 3f);
+
 
     private static int counter = 0;
 
@@ -16,7 +19,7 @@ public class WorldBuilder : MonoBehaviour
         GeneratePipe(5);
     }
 
-    private void GeneratePipe(int times)
+    public void GeneratePipe(int times)
     {
         for (int i = 0; i < times; i++)
         {
@@ -31,7 +34,7 @@ public class WorldBuilder : MonoBehaviour
         Transform newPipeTransform = newPipe.transform;
 
         float x = counter * horizontalSpacing;
-        float y = GenerateRandomYOffset();
+        float y = GenerateRandomYOffset(pipeVerticalOffsetRange);
 
         newPipeTransform.position = new Vector3(
             x,
@@ -39,11 +42,38 @@ public class WorldBuilder : MonoBehaviour
             newPipeTransform.position.z
         );
 
+        bool hasEnemy = DoesHaveEnemy(counter);
+        if (hasEnemy)
+        {
+            GenerateEnemy();
+        }
+
         counter++;
     }
 
-    private float GenerateRandomYOffset()
+    private void GenerateEnemy()
     {
-        return UnityEngine.Random.Range(verticalRange.x, verticalRange.y);
+        GameObject newPipe = Instantiate(enemy);
+
+        Transform newPipeTransform = newPipe.transform;
+
+        float x = counter * horizontalSpacing;
+        float y = GenerateRandomYOffset(enemyVerticalOffsetRange);
+
+        newPipeTransform.position = new Vector3(
+            x,
+            newPipeTransform.position.y + y,
+            newPipeTransform.position.z
+        );
+    }
+
+    private bool DoesHaveEnemy(int c)
+    {
+        return true;
+    }
+
+    private float GenerateRandomYOffset(Vector2 v)
+    {
+        return UnityEngine.Random.Range(v.x, v.y);
     }
 }

@@ -164,8 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldBuilder
   pipe: {fileID: 329230061126626691, guid: 4f062e3274599014687ca9aea38a39b0, type: 3}
+  enemy: {fileID: 165083969503165769, guid: 5e5ffb9f317153a449ccc512bb16cd3e, type: 3}
   horizontalSpacing: 5
-  verticalRange: {x: -3, y: 3}
+  pipeVerticalOffsetRange: {x: -2, y: 2}
+  enemyVerticalOffsetRange: {x: -3, y: 3}
 --- !u!1 &357803243
 GameObject:
   m_ObjectHideFlags: 0
