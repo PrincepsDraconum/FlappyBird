@@ -13,7 +13,7 @@ public class WorldBuilder : MonoBehaviour
 
     private void Start()
     {
-        GeneratePipe(1);
+        GeneratePipe(5);
     }
 
     private void GeneratePipe(int times)
