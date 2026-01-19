@@ -22,12 +22,13 @@ public class Player : MonoBehaviour
     public String WinPortal;
     public TextMeshProUGUI TotalMoney;
     public int DeathLayer;
-    public String WinCollider;
     public TextMeshProUGUI PointCounter;
     public GameObject YouAreDeadMenu;
+    public Transform Camera;
 
     public void Update()
     {
+        Camera.position = new Vector3(this.transform.position.x, Camera.position.y, Camera.position.z);
         if (!PlayerDead)
         {
             var attackAction = GetComponent<PlayerInput>().actions.FindAction("Attack", false);
@@ -43,10 +44,10 @@ public class Player : MonoBehaviour
             {
                 PlayerJumpCooldown = 0.1f;
                 PlayerVertSpeed = PlayerJumpPower;
-                this.GetComponent<Animator>().Play("Flap");
+                //this.GetComponent<Animator>().Play("Flap");
             }
             PlayerHorizSpeed = Mathf.Lerp(PlayerHorizSpeed, PlayerHorizSpeedMax, Time.deltaTime);
-            PlayerVertSpeed = Mathf.Clamp(PlayerVertSpeed - Time.deltaTime, PlayerMaxFall, PlayerJumpPower);
+            PlayerVertSpeed = Mathf.Clamp(PlayerVertSpeed - Time.deltaTime*5, PlayerMaxFall, PlayerJumpPower);
             foreach (var col in Physics2D.OverlapBoxAll(transform.position, GetComponent<Collider2D>().bounds.size, 0))
             {
                 if (col.gameObject.tag == MoneyTag)
@@ -62,17 +63,17 @@ public class Player : MonoBehaviour
                     PlayerDead = true;
                 }
             }
-            YouAreDeadMenu.SetActive(false);
+            //YouAreDeadMenu.SetActive(false);
         } 
-        PointCounter.text = CurrentMoney.ToString();
-        TotalMoney.text = m.n.Money.ToString();
+        //PointCounter.text = CurrentMoney.ToString();
+        //TotalMoney.text = m.n.Money.ToString();
         this.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(PlayerHorizSpeedMax, PlayerVertSpeed);
 
         if (PlayerDead)
         {
             PlayerHorizSpeed = 0;
             PlayerVertSpeed = 0;
-            YouAreDeadMenu.SetActive(true);
+            //YouAreDeadMenu.SetActive(true);
         }
     }
 
